@@ -1,0 +1,198 @@
+SET search_path TO hipermercado;
+
+
+CREATE TABLE Hipermercado
+(
+  endereco VARCHAR(100) NOT NULL,
+  CPFGerente VARCHAR(11) NOT NULL,
+  PRIMARY KEY (endereco)
+);
+
+
+CREATE TABLE Funcionario
+(
+  CPF VARCHAR(11) NOT NULL,
+  jornadaTrabalho INT NOT NULL,
+  valorSalario NUMERIC(15,2) NOT NULL,
+  valorHoraExtra NUMERIC(15,2) NOT NULL,
+  funcao VARCHAR(30) NOT NULL,
+  dataIngressoGerencia DATE ,
+  cursoGerencia BOOLEAN,
+  localAtendente VARCHAR(40) ,
+  CPFGerente VARCHAR(11),
+  enderecoHipermercado VARCHAR(100),
+  PRIMARY KEY (CPF),
+  FOREIGN KEY (CPFGerente) REFERENCES Funcionario(CPF),
+  FOREIGN KEY (enderecoHipermercado) REFERENCES hipermercado(endereco)
+);
+
+CREATE TABLE Fornecedor
+(
+  nroCad NUMERIC(12) NOT NULL,
+  denominacaoSocial VARCHAR(30) NOT NULL,
+  telefone NUMERIC(14) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  CNPJ VARCHAR(20) NOT NULL,
+  pessoa_contato VARCHAR(40) NOT NULL,
+  prazoMedio_entrega INT NOT NULL,
+  condicao_pagamento VARCHAR(30) NOT NULL,
+  valorTotal NUMERIC(15,2) NOT NULL,
+  CEP VARCHAR(15) NOT NULL,
+  bairro VARCHAR(30) NOT NULL,
+  cidade VARCHAR(50) NOT NULL,
+  estado VARCHAR(25) NOT NULL,
+  PRIMARY KEY (nroCad)
+);
+
+CREATE TABLE Promocao
+(
+  codigo INT NOT NULL,
+  dataInicio DATE NOT NULL,
+  dataFim DATE NOT NULL,
+  nome VARCHAR(40) NOT NULL,
+  descricao VARCHAR(100) NOT NULL,
+  PRIMARY KEY (codigo)
+);
+
+CREATE TABLE Pedido
+(
+  valorDesc NUMERIC(15,2) NOT NULL,
+  valorTotal NUMERIC(15,2) NOT NULL,
+  devolucao BOOLEAN NOT NULL DEFAULT 'false',
+  nro NUMERIC(12) NOT NULL,
+  emissao INT NOT NULL,
+  estimativaEntrega DATE NOT NULL,
+  dataEntrega DATE NOT NULL,
+  condicaoPagamento VARCHAR(30) NOT NULL,
+  nroCad NUMERIC(12) NOT NULL,
+  PRIMARY KEY (nro),
+  FOREIGN KEY (nroCad) REFERENCES Fornecedor(nroCad)
+);
+
+CREATE TABLE tipoCliente
+(
+  tipo INT NOT NULL,
+  desconto INT NOT NULL,
+  valorminimo INT NOT NULL,
+  PRIMARY KEY (tipo)
+);
+
+CREATE TABLE Cliente
+(
+  CPF VARCHAR(11) NOT NULL,
+  Nome VARCHAR(50) NOT NULL,
+  enderecoResidencial VARCHAR(75) NOT NULL,
+  data_nascimento DATE NOT NULL,
+  profissao VARCHAR(25) NOT NULL,
+  gastoAnual NUMERIC(15,2) NOT NULL,
+  tipo INT,
+  PRIMARY KEY (CPF),
+  FOREIGN KEY (tipo) REFERENCES tipoCliente(tipo)
+);
+
+CREATE TABLE telefone_contato
+(
+  telefone NUMERIC(14) NOT NULL,
+  CPF VARCHAR(11) NOT NULL,
+  PRIMARY KEY (telefone, CPF),
+  FOREIGN KEY (CPF) REFERENCES Cliente(CPF)
+);
+
+CREATE TABLE endereco_entrega
+(
+  endereco VARCHAR(50) NOT NULL,
+  CPF VARCHAR(11) NOT NULL,
+  PRIMARY KEY (endereco, CPF),
+  FOREIGN KEY (CPF) REFERENCES Cliente(CPF)
+);
+
+CREATE TABLE Compra
+(
+  nroCupom NUMERIC(12) NOT NULL,
+  data DATE NOT NULL DEFAULT current_date,
+  horario TIME NOT NULL DEFAULT current_time,
+  valorTotal NUMERIC(15,2) NOT NULL,
+  valorTotalDesconto NUMERIC(15,2) NOT NULL,
+  formaPagamento VARCHAR(30) NOT NULL,
+  valorDesconto NUMERIC(15,2) NOT NULL,
+  CPF VARCHAR(11) NOT NULL,
+  PRIMARY KEY (nroCupom),
+  FOREIGN KEY (CPF) REFERENCES Cliente(CPF)
+);
+
+CREATE TABLE Sessao
+(
+  codigo NUMERIC(12) NOT NULL,
+  nome VARCHAR(25) NOT NULL,
+  CPFRepositor VARCHAR(11) NOT NULL,
+  PRIMARY KEY (codigo),
+  FOREIGN KEY (CPFRepositor) REFERENCES Funcionario(CPF)
+);
+
+CREATE TABLE Produto
+(
+  nroCadastro NUMERIC(15,2) NOT NULL,
+  descricao VARCHAR(50) NOT NULL,
+  fabricante VARCHAR(30) NOT NULL,
+  unidadeMedida VARCHAR(10) NOT NULL,
+  foto bytea,
+  preco NUMERIC(15,2) NOT NULL,
+  qtdadeEstoque INT NOT NULL,
+  media_vendas FLOAT NOT NULL,
+  codigo NUMERIC(12) NOT NULL,
+  codigoCat VARCHAR(12) NOT NULL,
+  PRIMARY KEY (nroCadastro),
+  FOREIGN KEY (codigo) REFERENCES Sessao(codigo)
+  FOREIGN KEY (codigoCat) REFERENCES CategoriaProduto(codigo)
+);
+
+CREATE TABLE CategoriaProduto
+(
+  codigo VARCHAR(12) NOT NULL,
+  descricao VARCHAR(75) NOT NULL,
+  codigoSuperior VARCHAR(12),
+  PRIMARY KEY (codigo),
+  FOREIGN KEY (codigoSuperior) REFERENCES CategoriaProduto(codigo)
+);
+
+CREATE TABLE Fornece
+(
+  precoCusto NUMERIC(15,2) NOT NULL,
+  nroCad NUMERIC(12) NOT NULL,
+  nroCadastro NUMERIC(15,2) NOT NULL,
+  PRIMARY KEY (nroCad, nroCadastro),
+  FOREIGN KEY (nroCad) REFERENCES Fornecedor(nroCad),
+  FOREIGN KEY (nroCadastro) REFERENCES Produto(nroCadastro)
+);
+
+CREATE TABLE esta_em
+(
+  descontoNormal NUMERIC(15,2) NOT NULL,
+  descontoEspecial NUMERIC(15,2) NOT NULL,
+  nroCadastro NUMERIC(15,2) NOT NULL,
+  codigo INT NOT NULL,
+  PRIMARY KEY (nroCadastro, codigo),
+  FOREIGN KEY (nroCadastro) REFERENCES Produto(nroCadastro),
+  FOREIGN KEY (codigo) REFERENCES Promocao(codigo)
+);
+
+CREATE TABLE estaContido
+(
+  quantidade INT NOT NULL,
+  nroCupom NUMERIC(12) NOT NULL,
+  nroCadastro NUMERIC(15,2) NOT NULL,
+  PRIMARY KEY (nroCupom, nroCadastro),
+  FOREIGN KEY (nroCupom) REFERENCES Compra(nroCupom),
+  FOREIGN KEY (nroCadastro) REFERENCES Produto(nroCadastro)
+);
+
+CREATE TABLE contem
+(
+  quantidade INT NOT NULL,
+  nro NUMERIC(12) NOT NULL,
+  nroCadastro NUMERIC(15,2) NOT NULL,
+  PRIMARY KEY (nro, nroCadastro),
+  FOREIGN KEY (nro) REFERENCES Pedido(nro),
+  FOREIGN KEY (nroCadastro) REFERENCES Produto(nroCadastro)
+);
+

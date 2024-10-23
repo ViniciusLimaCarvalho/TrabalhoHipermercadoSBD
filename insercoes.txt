@@ -1,0 +1,256 @@
+hipermercado:
+
+SET search_path TO hipermercado;
+
+INSERT INTO Hipermercado (endereco, CPFGerente) VALUES
+('Rua A, 100', NULL),
+('Avenida B, 200', NULL),
+('Praça C, 300', NULL),
+('Travessa D, 400', NULL),
+('Rua E, 500', NULL),
+('Avenida F, 600', NULL),
+('Praça G, 700', NULL),
+('Rua H, 800', NULL),
+('Avenida I, 900', NULL),
+('Rua J, 1000', NULL);
+
+
+fornecedor:
+
+SET search_path TO hipermercado;
+
+INSERT INTO Fornecedor (nroCad, denominacaoSocial, telefone, email, CNPJ, pessoa_contato, prazoMedio_entrega, condicao_pagamento, valorTotal, CEP, bairro, cidade, estado) VALUES
+(1, 'Fábrica de Chocolates Delícia', 11987654321, 'contato@chocolatesdelicia.com.br', '12.345.678/0001-90', 'Maria Chocolate', 5, 'À vista', 25000.00, '12345-678', 'Jardim Doce', 'São Paulo', 'SP'),
+(2, 'Livraria Mágica', 11876543210, 'info@livrariamagica.com.br', '23.456.789/0001-01', 'João Letras', 10, '30 dias', 15000.00, '23456-789', 'Centro', 'Rio de Janeiro', 'RJ'),
+(3, 'Pães e Doces do Paraíso', 11765432109, 'vendas@paesparaiso.com.br', '34.567.890/0001-12', 'Ana Pão', 7, '60 dias', 18000.00, '34567-890', 'Bairro Delícias', 'Belo Horizonte', 'MG'),
+(4, 'Aventuras em Pedais', 11654321098, 'contato@aventuraspedais.com.br', '45.678.901/0001-23', 'Carlos Ciclista', 4, 'À vista', 22000.00, '45678-901', 'Vila Verde', 'Curitiba', 'PR'),
+(5, 'Beleza Natural', 11543210987, 'atendimento@belezanatural.com.br', '56.789.012/0001-34', 'Fernanda Beleza', 6, '30 dias', 12000.00, '56789-012', 'Jardim Florido', 'Florianópolis', 'SC'),
+(6, 'Tecidos e Estampas', 11432109876, 'suporte@tecidosestampas.com.br', '67.890.123/0001-45', 'Roberto Estampa', 8, 'À vista', 14000.00, '67890-123', 'Bairro da Moda', 'Salvador', 'BA'),
+(7, 'Café da Manhã Gourmet', 11321098765, 'info@cafegourmet.com.br', '78.901.234/0001-56', 'Lucia Café', 3, '45 dias', 16000.00, '78901-234', 'Praça do Café', 'Brasília', 'DF'),
+(8, 'Brinquedos e Sorrisos', 11210987654, 'contato@brinquedossorrisos.com.br', '89.012.345/0001-67', 'Pedro Brinquedo', 5, '30 dias', 9000.00, '89012-345', 'Vila Criança', 'Porto Alegre', 'RS'),
+(9, 'Bijuterias da Amizade', 11109876543, 'vendas@bijuteriasamizade.com.br', '90.123.456/0001-78', 'Sofia Joias', 11, 'À vista', 11000.00, '90123-456', 'Bairro Brilhante', 'Manaus', 'AM'),
+(10, 'Hortas Urbanas', 11098765432, 'contato@hortasurbanas.com.br', '01.234.567/0001-89', 'André Horta', 6, '60 dias', 13000.00, '01234-567', 'Jardim Verde', 'Recife', 'PE');
+
+
+promoção:
+
+SET search_path TO hipermercado;
+
+INSERT INTO Promocao (codigo, dataInicio, dataFim, nome, descricao) VALUES
+(1, '2024-10-01', '2024-10-15', 'Semana do Chocolate', 'Descontos em todos os produtos de chocolate.'),
+(2, '2024-10-05', '2024-10-12', 'Festival de Frutas', 'Promoção de frutas selecionadas com 20% de desconto.'),
+(3, '2024-10-10', '2024-10-20', 'Dia das Crianças', 'Brinquedos em promoção e ofertas especiais para crianças.'),
+(4, '2024-11-01', '2024-11-30', 'Black November', 'Ofertas imperdíveis em eletrônicos e eletrodomésticos.'),
+(5, '2024-11-10', '2024-11-20', 'Semana da Beleza', 'Descontos em produtos de beleza e cuidados pessoais.'),
+(6, '2024-11-15', '2024-11-25', 'Promoção do Café', 'Descontos em cafés e acessórios para preparo.'),
+(7, '2024-12-01', '2024-12-15', 'Natal Encantado', 'Presentes de Natal com até 30% de desconto.'),
+(8, '2024-12-10', '2024-12-24', 'Liquidação de Fim de Ano', 'Descontos em toda a loja para queima de estoque.'),
+(9, '2024-12-20', '2024-12-31', 'Réveillon Festivo', 'Ofertas especiais em bebidas e festas de fim de ano.'),
+(10, '2024-10-15', '2024-10-30', 'Promoção de Acessórios', 'Descontos em acessórios de moda e decoração.');
+
+
+pedido:
+
+SET search_path TO hipermercado;
+
+INSERT INTO Pedido (valorDesc, valorTotal, devolucao, nro, emissao, estimativaEntrega, dataEntrega, condicaoPagamento, nroCad) VALUES
+(50.00, 2450.00, false, 1, 20241001, '2024-10-05', '2024-10-07', 'À vista', 1),
+(30.00, 1470.00, false, 2, 20241002, '2024-10-06', '2024-10-08', '30 dias', 2),
+(20.00, 1760.00, false, 3, 20241003, '2024-10-07', '2024-10-10', '60 dias', 3),
+(100.00, 2100.00, false, 4, 20241004, '2024-10-08', '2024-10-12', 'À vista', 4),
+(75.00, 1525.00, false, 5, 20241005, '2024-10-09', '2024-10-14', '30 dias', 5),
+(15.00, 685.00, false, 6, 20241006, '2024-10-10', '2024-10-15', 'À vista', 6),
+(60.00, 4400.00, false, 7, 20241007, '2024-10-11', '2024-10-18', '45 dias', 7),
+(120.00, 980.00, false, 8, 20241008, '2024-10-12', '2024-10-20', 'À vista', 8),
+(45.00, 1655.00, false, 9, 20241009, '2024-10-13', '2024-10-25', '30 dias', 9),
+(0.00, 1350.00, false, 10, 20241010, '2024-10-14', '2024-10-28', '60 dias', 10);
+
+
+tipocliente:
+
+SET search_path TO hipermercado;
+
+INSERT INTO tipocliente VALUES
+(1,0.10,3000), (2,0.20,4000), (3,0.45,10000)
+
+
+cliente:
+
+SET search_path TO hipermercado;
+
+INSERT INTO Cliente (CPF, Nome, enderecoResidencial, data_nascimento, profissao, gastoAnual, tipo) VALUES
+('12345678901', 'Ana Oliveira', 'Rua das Flores, 123', '1990-05-15', 'Arquiteta', 3100.00, 1),
+('23456789012', 'Carlos Silva', 'Avenida Brasil, 456', '1985-10-22', 'Engenheiro', 6000.00, 2),
+('34567890123', 'Mariana Costa', 'Praça do Mercado, 789', '1992-03-10', 'Professora', 3050.00, 1),
+('45678901234', 'João Pereira', 'Rua do Sol, 321', '1980-07-18', 'Médico', 35000.00, 3),
+('56789012345', 'Fernanda Lima', 'Avenida das Nações, 654', '1995-12-01', 'Designer', 3600.00, 1),
+('67890123456', 'Carlos Magno', 'Rua do Comércio, 987', '1988-09-05', 'Imperador', 30000.00, 3),
+('78901234567', 'Sofia Almeida', 'Travessa Verde, 159', '1975-11-30', 'Advogada', 22000.00, 3),
+('89012345678', 'Claudio Rodrigues', 'Rua IBM, 360', '1983-02-25', 'Professor', 5000.00, 2),
+('90123456789', 'Juliana Rocha', 'Avenida da Liberdade, 852', '2008-06-14', 'Desempregada', 140.00, NULL),
+('01234567890', 'Luis Fernando', 'Praça da Alegria, 369', '1982-04-30', 'Empresário', 40000.00, 3);
+
+telefone contato:
+
+SET search_path TO hipermercado;
+
+INSERT INTO telefone_contato (telefone, CPF) VALUES
+('+5511987654321', '12345678901'), 
+('+5521987654321', '23456789012'),  
+('+5531987654321', '34567890123'),  
+('+5541987654321', '45678901234'),  
+('+5551987654321', '56789012345'),  
+('+5561987654321', '67890123456'),  
+('+5571987654321', '78901234567'),  
+('+5581987654321', '89012345678'),  
+('+5591987654321', '90123456789'),  
+('+5511912345678', '01234567890'); 
+
+endereço entrega:
+
+SET search_path TO hipermercado;
+
+INSERT INTO endereco_entrega (endereco, CPF) VALUES
+('Rua das Acácias, 100', '12345678901'),  
+('Avenida das Flores, 200', '23456789012'),
+('Rua da Esperança, 300', '34567890123'),  
+('Avenida do Progresso, 400', '45678901234'),
+('Rua do Futuro, 500', '56789012345'),  
+('Praça da Alegria, 600', '67890123456'),
+('Travessa da Liberdade, 700', '78901234567'),  
+('Avenida da Inovação, 800', '89012345678'),  
+('Rua da Criatividade, 900', '90123456789'),  
+('Bairro do Desenvolvimento, 1000', '01234567890');  
+
+
+categoria produto:
+
+SET search_path TO hipermercado;
+
+INSERT INTO categoriaproduto VALUES
+('HORT', 'Hortifruti', NULL),
+('VERD', 'Verduras', 'HORT'),
+('FRUT', 'Frutas', 'HORT'),
+('ELET', 'Eletronicos', NULL),
+('PECA', 'Peças', 'ELET'),
+('COMP', 'Computadores', 'ELET'),
+('ACOU', 'Açougue', NULL),
+('PEIX', 'PEIXARIA', 'ACOU'),
+('LIMP', 'Limpeza',NULL),
+('FRIO', 'Frios e Laticínios', NULL);
+
+Funcionário:
+gerentes:
+
+INSERT INTO Funcionario (CPF, jornadaTrabalho, valorSalario, valorHoraExtra, funcao, dataIngressoGerencia, cursoGerencia, localAtendente, CPFGerente, enderecoHipermercado, enderecoResidencial, telefoneContato, dataNascimento, formacaoEscolar, estadoCivil, nome) VALUES
+('11122233344', 40, 6000.00, 50.00, 'Gerente', '2023-01-15', true, NULL, NULL, 'Rua A, 100', 'Rua das Acácias, 123', 11987654321, '1985-04-20', 'Administração', 'Solteira', 'Ana Santos'),
+('22233344455', 40, 6500.00, 60.00, 'Gerente', '2023-02-10', true, NULL, NULL, 'Avenida B, 200', 'Avenida das Flores, 456', 21987654321, '1980-06-15', 'Engenharia', 'Casado', 'Carlos Almeida'),
+('33344455566', 40, 7000.00, 55.00, 'Gerente', '2023-03-05', true, NULL, NULL, 'Praça C, 300', 'Praça do Mercado, 789', 31987654321, '1992-03-10', 'Educação', 'Solteira', 'Mariana Ferreira'),
+('44455566677', 40, 6200.00, 52.00, 'Gerente', '2023-04-01', true, NULL, NULL, 'Travessa D, 400', 'Avenida do Progresso, 400', 41987654321, '1978-11-05', 'Medicina', 'Divorciado', 'João Pedro'),
+('55566677788', 40, 5800.00, 58.00, 'Gerente', '2023-04-20', true, NULL, NULL, 'Rua E, 500', 'Rua do Futuro, 500', 51987654321, '1990-12-01', 'Design', 'Solteira', 'Fernanda Lima'),
+('66677788899', 40, 6900.00, 62.00, 'Gerente', '2023-05-10', true, NULL, NULL, 'Avenida F, 600', 'Praça da Alegria, 600', 61987654321, '1985-09-12', 'Gestão', 'Casado', 'Pedro Silva'),
+('77788899900', 40, 7200.00, 65.00, 'Gerente', '2023-06-15', true, NULL, NULL, 'Praça G, 700', 'Travessa da Liberdade, 700', 71987654321, '1983-07-18', 'Direito', 'Solteira', 'Sofia Almeida'),
+('88899900011', 40, 6400.00, 59.00, 'Gerente', '2023-07-05', true, NULL, NULL, 'Rua H, 800', 'Avenida da Inovação, 800', 81987654321, '1989-05-24', 'Tecnologia', 'Casado', 'Rafael Gomes'),
+('99900011122', 40, 7500.00, 70.00, 'Gerente', '2023-08-01', true, NULL, NULL, 'Avenida I, 900', 'Rua da Criatividade, 900', 91987654321, '1991-06-14', 'Veterinária', 'Solteira', 'Juliana Rocha'),
+('00011122233', 40, 6800.00, 53.00, 'Gerente', '2023-09-10', true, NULL, NULL, 'Rua J, 1000', 'Bairro do Desenvolvimento, 1000', 11912345678, '1982-08-30', 'Administração', 'Casado', 'José Gustavo');
+
+demais funcionários:
+
+SET search_path TO hipermercado;
+
+INSERT INTO Funcionario (CPF, jornadaTrabalho, valorSalario, valorHoraExtra, funcao, dataIngressoGerencia, cursoGerencia, localAtendente, CPFGerente, enderecoHipermercado, enderecoResidencial, telefoneContato, dataNascimento, formacaoEscolar, estadoCivil, nome) VALUES
+('11122233345', 22, 2000.00, 20.00, 'Empacotador', NULL, NULL, NULL, '11122233344', 'Rua A, 100', 'Rua da Alegria, 1', 11912345678, '1995-01-10', 'Ensino Médio', 'Solteiro', 'Lucas Santos'),
+('22233344456', 22, 2200.00, 25.00, 'Empacotador', NULL, NULL, NULL, '22233344455', 'Avenida B, 200', 'Rua da Paz, 2', 21912345678, '1993-02-15', 'Ensino Médio', 'Casado', 'Marcos Almeida'),
+('33344455567', 22, 2500.00, 30.00, 'Faxineiro', NULL, NULL, NULL, '33344455566', 'Praça C, 300', 'Rua do Sol, 3', 31912345678, '1990-03-20', 'Ensino Médio', 'Solteiro', 'Ana Paula'),
+('44455566678', 22, 2400.00, 28.00, 'Faxineiro', NULL, NULL, NULL, '44455566677', 'Travessa D, 400', 'Rua da Lua, 4', 41912345678, '1989-04-25', 'Ensino Médio', 'Divorciado', 'José Silva'),
+('55566677789', 22, 2700.00, 32.00, 'Repositor de Gôndola', NULL, NULL, NULL, '55566677788', 'Rua E, 500', 'Rua do Mar, 5', 51912345678, '1988-05-30', 'Ensino Médio', 'Casado', 'Fernanda Oliveira'),
+('66677788890', 22, 2300.00, 24.00, 'Repositor de Gôndola', NULL, NULL, NULL, '66677788899', 'Avenida F, 600', 'Rua da Floresta, 6', 61912345678, '1994-06-14', 'Ensino Médio', 'Solteiro', 'Ricardo Gomes'),
+('77788899901', 40, 2100.00, 22.00, 'Atendente', NULL, NULL, 'Caixa', '77788899900', 'Praça G, 700', 'Rua do Vento, 7', 71912345678, '1996-07-19', 'Ensino Médio', 'Solteiro', 'Juliana Costa'),
+('88899900012', 40, 2200.00, 25.00, 'Atendente', NULL, NULL, 'Caixa', '88899900011', 'Rua H, 800', 'Rua da Chuva, 8', 81912345678, '1995-08-22', 'Ensino Médio', 'Casado', 'Gabriel Mendes'),
+('99900011123', 40, 2500.00, 30.00, 'Atendente', NULL, NULL, 'Padaria', '99900011122', 'Avenida I, 900', 'Rua do Pão, 9', 91912345678, '1993-09-15', 'Ensino Médio', 'Divorciado', 'Sofia Almeida'),
+('00011122234', 40, 2600.00, 35.00, 'Atendente', NULL, NULL, 'Padaria', '00011122233', 'Rua J, 1000', 'Rua da Manhã, 10', 11923456789, '1991-10-10', 'Ensino Médio', 'Solteiro', 'André Ribeiro'),
+('11122233346', 22, 2000.00, 20.00, 'Empacotador', NULL, NULL, NULL, '11122233344', 'Rua A, 100', 'Rua das Flores, 11', 11934567890, '1994-01-30', 'Ensino Médio', 'Casado', 'Cecília Martins'),
+('22233344457', 22, 2200.00, 25.00, 'Empacotador', NULL, NULL, NULL, '22233344455', 'Avenida B, 200', 'Rua do Horizonte, 12', 21934567890, '1993-02-28', 'Ensino Médio', 'Solteiro', 'Luan Pereira'),
+('33344455568', 22, 2500.00, 30.00, 'Faxineiro', NULL, NULL, NULL, '33344455566', 'Praça C, 300', 'Rua do Oceano, 13', 31934567890, '1990-03-17', 'Ensino Médio', 'Divorciado', 'Renata Lima'),
+('44455566679', 22, 2400.00, 28.00, 'Faxineiro', NULL, NULL, NULL, '44455566678', 'Travessa D, 400', 'Rua da Esperança, 14', 41934567890, '1989-04-26', 'Ensino Médio', 'Casado', 'Pedro Souza'),
+('55566677780', 22, 2700.00, 32.00, 'Repositor de Gôndola', NULL, NULL, NULL, '55566677789', 'Rua E, 500', 'Rua das Estrelas, 15', 51934567890, '1988-05-24', 'Ensino Médio', 'Solteiro', 'Mariana Santos'),
+('66677788891', 22, 2300.00, 24.00, 'Repositor de Gôndola', NULL, NULL, NULL, '66677788890', 'Avenida F, 600', 'Rua do Cristal, 16', 61934567890, '1994-06-11', 'Ensino Médio', 'Solteiro', 'Thiago Lopes'),
+('77788899902', 40, 2100.00, 22.00, 'Atendente', NULL, NULL, 'Caixa', '77788899901', 'Praça G, 700', 'Rua da Luz, 17', 71934567890, '1996-07-28', 'Ensino Médio','Casada', 'Tatiane Rocha'),
+('88899900013', 40, 2200.00, 25.00, 'Atendente', NULL, NULL, 'Caixa', '88899900012', 'Rua H, 800', 'Rua do Sorriso, 18', 81934567890, '1995-08-15', 'Ensino Médio','Viúvo', 'Leandro Silva'),
+('99900011124', 40, 2500.00, 30.00, 'Atendente', NULL, NULL, 'Padaria', '99900011123', 'Avenida I, 900', 'Rua da Magia, 19', 91934567890, '1993-09-20', 'Ensino Médio', 'Casado', 'Carla Mendes'),
+('00011122235', 40, 2600.00, 35.00, 'Atendente', NULL, NULL, 'Padaria', '00011122234', 'Rua J, 1000', 'Rua do Amanhã, 20', 11945678901, '1991-10-05', 'Ensino Médio', 'Divorciado', 'Ricardo Gomes');
+
+
+Sessão:
+
+SET search_path TO hipermercado;
+
+INSERT INTO Sessao (codigo, nome, CPFRepositor) VALUES
+(1, 'Alimentos', '55566677789'),
+(2, 'Bebidas', '66677788890'),
+(3, 'Produtos de Limpeza', '55566677780'),
+(4, 'Laticínios', '66677788891');
+
+
+Produtos:
+
+SET search_path TO hipermercado;
+
+-- Produtos na Sessão Alimentos
+INSERT INTO Produto (nroCadastro, descricao, fabricante, unidadeMedida, foto, preco, qtdadeEstoque, media_vendas, codigo, codigoCat) VALUES
+(10001, 'Maçã', 'Fruticultura Ltda', 'kg', NULL, 3.50, 100, 20.0, 1, 'FRUT'),
+(10002, 'Banana', 'Banana Co', 'kg', NULL, 2.00, 150, 25.0, 1, 'FRUT'),
+(10003, 'Alface', 'Verduras e Companhia', 'unidade', NULL, 1.50, 200, 15.0, 1, 'VERD'),
+(10004, 'Cenoura', 'Hortifrutis Ltda', 'kg', NULL, 4.00, 120, 18.0, 1, 'VERD'),
+(10005, 'Tomate', 'Tomate Bom', 'kg', NULL, 5.00, 80, 30.0, 1, 'VERD'),
+(50001, 'Filé de Frango', 'Açougue do Bairro', 'kg', NULL, 15.00, 100, 20.0, 1, 'ACOU'),
+(50002, 'Carne Moída', 'Açougue do Povo', 'kg', NULL, 25.00, 80, 30.0, 1, 'ACOU'),
+(50003, 'Costela', 'Carnes Nobres', 'kg', NULL, 40.00, 60, 15.0, 1, 'ACOU'),
+(50004, 'Linguiça', 'Linguiça Caseira', 'kg', NULL, 20.00, 70, 25.0, 1, 'ACOU'),
+(50005, 'Pernil', 'Açougue Premium', 'kg', NULL, 35.00, 40, 10.0, 1, 'ACOU');
+
+-- Produtos na Sessão Bebidas
+INSERT INTO Produto (nroCadastro, descricao, fabricante, unidadeMedida, foto, preco, qtdadeEstoque, media_vendas, codigo, codigoCat) VALUES
+(20001, 'Água Mineral', 'Mineral Co', 'litro', NULL, 1.00, 300, 50.0, 2, 'BEBI'),
+(20002, 'Suco de Laranja', 'Frutal Ltda', 'litro', NULL, 4.50, 200, 40.0, 2, 'BEBI'),
+(20003, 'Refrigerante', 'Fizz Co', 'litro', NULL, 3.00, 250, 35.0, 2, 'BEBI'),
+(20004, 'Cerveja', 'Cervejaria XYZ', 'lata', NULL, 5.00, 150, 20.0, 2, 'BEBI'),
+(20005, 'Vinho Tinto', 'Vinícola ABC', 'garrafa', NULL, 30.00, 50, 10.0, 2, 'BEBI');
+
+-- Produtos na Sessão Produtos de Limpeza
+INSERT INTO Produto (nroCadastro, descricao, fabricante, unidadeMedida, foto, preco, qtdadeEstoque, media_vendas, codigo, codigoCat) VALUES
+(30001, 'Detergente', 'Limpeza Fácil', 'litro', NULL, 2.50, 100, 30.0, 3, 'LIMP'),
+(30002, 'Sabão em Pó', 'Sabão Bom', 'kg', NULL, 8.00, 80, 20.0, 3, 'LIMP'),
+(30003, 'Desinfetante', 'Limpeza Total', 'litro', NULL, 5.50, 120, 25.0, 3, 'LIMP'),
+(30004, 'Álcool', 'Álcool Puro', 'litro', NULL, 6.00, 50, 15.0, 3, 'LIMP'),
+(30005, 'Esponja de Limpeza', 'Limpeza Rápida', 'unidade', NULL, 1.00, 200, 50.0, 3, 'LIMP');
+
+-- Produtos na Sessão Laticínios
+INSERT INTO Produto (nroCadastro, descricao, fabricante, unidadeMedida, foto, preco, qtdadeEstoque, media_vendas, codigo, codigoCat) VALUES
+(40001, 'Queijo Mussarela', 'Laticínios do Sul', 'kg', NULL, 20.00, 60, 15.0, 4, 'FRIO'),
+(40002, 'Iogurte Natural', 'Laticínios ABC', 'unidade', NULL, 3.00, 100, 40.0, 4, 'FRIO'),
+(40003, 'Manteiga', 'Manteiga Fresca', 'kg', NULL, 15.00, 50, 10.0, 4, 'FRIO'),
+(40004, 'Creme de Leite', 'Laticínios XYZ', 'caixa', NULL, 4.00, 80, 20.0, 4, 'FRIO'),
+(40005, 'Leite Integral', 'Leite da Fazenda', 'litro', NULL, 3.50, 150, 35.0, 4, 'FRIO');
+
+Compras:
+
+SET search_path TO hipermercado;
+
+INSERT INTO compra (nroCupom, dataCompra, horario, valorTotal, valorTotalDesconto, formaPagamento, valorDesconto, CPF)VALUES
+(1,'2021-12-10', '00:13:21', 53.50, 42.8, 'PIX', 10.70, '89012345678'),
+(2, current_date, '10:19:21', 94.50 , 75.6, 'Dinheiro', 18.9, '89012345678')
+(3, current_date, current_time, 2000, 1100, 'Moeda de Ouro', 900, '67890123456')
+
+
+estacontido:
+
+SET search_path TO hipermercado;
+
+INSERT INTO estacontido (quantidade, nroCupom, nroCadastro) VALUES
+(3, 2, 10003),
+(1, 2, 20001),
+(3, 2, 20005),
+(2, 1, 50002),
+(1, 1, 40005),
+(50, 3, 50003);
