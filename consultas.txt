@@ -1,0 +1,48 @@
+1)
+SET search_path TO hipermercado;
+
+SELECT P.descricao, P.nrocadastro
+FROM produto P, cliente C, compra CM, estaContido E, categoriaproduto CT
+WHERE P.nrocadastro = E.nrocadastro AND E.nrocupom = CM.nrocupom AND CM.cpf = C.cpf AND
+C.nome = 'Claudio Rodrigues' AND CT.codigo = P.codigocat AND CT.descricao = 'Açougue'
+
+
+2)
+SET search_path TO hipermercado;
+
+SELECT F.denominacaosocial, C.nome, C.profissao
+FROM Fornecedor F, Fornece FR, Produto P, estacontido E, Compra CM, Cliente C, tipocliente T
+WHERE F.nrocad = FR.nrocad AND FR.nrocadastro = P.nrocadastro AND P.nrocadastro = E.nrocadastro AND
+E.nrocupom = CM.nrocupom AND CM.cpf = C.cpf AND C.tipo = T.tipo AND T.descricao = 'DIAMANTE'
+
+3)
+SET search_path TO hipermercado;
+
+SELECT SUM(preco * qtdadeestoque), F.nome
+FROM produto P, funcionario F, sessao S
+WHERE P.codigo = S.codigo AND S.cpfrepositor = F.cpf
+GROUP BY F.nome
+HAVING SUM(preco * qtdadeestoque) >= ALL (SELECT SUM(preco * qtdadeestoque)
+							FROM produto P JOIN sessao S ON S.codigo = P.codigo
+							GROUP BY S.nome)
+
+
+4)
+SET search_path TO hipermercado;
+
+SELECT P.descricao, 
+       CM.nrocupom, 
+       CM.datacompra, 
+       C.nome AS cliente, 
+       F.denominacaosocial, 
+       FU.nome AS atendente, 
+       PM.nome AS promocao
+FROM Produto P
+JOIN esta_em EE ON EE.nrocadastro = P.nrocadastro
+JOIN Promocao PM ON EE.codigo = PM.codigo AND PM.datainicio <= current_date AND PM.datafim >= current_date
+LEFT JOIN estacontido E ON P.nrocadastro = E.nrocadastro
+LEFT JOIN compra CM ON CM.nrocupom = E.nrocupom
+LEFT JOIN Cliente C ON CM.cpf = C.cpf
+LEFT JOIN Funcionario FU ON CM.cpfatendente = FU.cpf
+LEFT JOIN Fornece FR ON P.nrocadastro = FR.nrocadastro
+LEFT JOIN Fornecedor F ON FR.nrocad = F.nrocad

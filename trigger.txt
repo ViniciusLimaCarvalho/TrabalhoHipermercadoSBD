@@ -1,0 +1,24 @@
+SET search_path TO hipermercado;
+
+CREATE OR REPLACE FUNCTION valorTotPedido()
+RETURNS trigger AS 
+$$
+BEGIN
+    UPDATE pedido
+    SET valortotal = (
+        SELECT SUM(C.quantidade * FR.precocusto)
+        FROM produto P, contem C, fornecedor F, fornece FR
+        WHERE P.nrocadastro = C.nrocadastro 
+        AND C.nro = NEW.nro AND F.nrocad = FR.nrocad AND P.nrocadastro = FR.nrocadastro
+    )
+    WHERE nro = NEW.nro;
+    
+    RETURN NULL; 
+END
+$$ 
+LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE TRIGGER adicionaProdutoPedido
+AFTER INSERT ON contem
+FOR EACH ROW
+EXECUTE FUNCTION valorTotPedido();

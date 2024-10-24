@@ -109,15 +109,17 @@ CREATE TABLE endereco_entrega
 CREATE TABLE Compra
 (
   nroCupom NUMERIC(12) NOT NULL,
-  data DATE NOT NULL DEFAULT current_date,
+  dataCompra DATE NOT NULL DEFAULT current_date,
   horario TIME NOT NULL DEFAULT current_time,
   valorTotal NUMERIC(15,2) NOT NULL,
   valorTotalDesconto NUMERIC(15,2) NOT NULL,
   formaPagamento VARCHAR(30) NOT NULL,
   valorDesconto NUMERIC(15,2) NOT NULL,
   CPF VARCHAR(11) NOT NULL,
+  CPFatendente VARCHAR(11) NOT NULL,
   PRIMARY KEY (nroCupom),
-  FOREIGN KEY (CPF) REFERENCES Cliente(CPF)
+  FOREIGN KEY (CPF) REFERENCES Cliente(CPF),
+  FOREIGN KEY (CPFatendente) REFERENCES Funcionário(CPF)
 );
 
 CREATE TABLE Sessao

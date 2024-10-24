@@ -1,0 +1,17 @@
+SET search_path TO hipermercado;
+
+CREATE OR REPLACE FUNCTION atualizaGastoAnual()
+RETURNS VOID AS
+$$
+BEGIN
+
+UPDATE cliente C
+SET gastoAnual = COALESCE((SELECT SUM(P.preco * E.quantidade)
+					FROM produto P, estacontido E, cliente C1, compra CM
+					WHERE P.nrocadastro = E.nrocadastro AND E.nrocupom = CM.nrocupom
+					AND CM.cpf = C1.CPF AND C1.CPF = C.CPF),0);
+
+END
+$$
+language 'plpgsql';
+

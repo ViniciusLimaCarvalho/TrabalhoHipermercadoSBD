@@ -37,16 +37,16 @@ promoção:
 SET search_path TO hipermercado;
 
 INSERT INTO Promocao (codigo, dataInicio, dataFim, nome, descricao) VALUES
-(1, '2024-10-01', '2024-10-15', 'Semana do Chocolate', 'Descontos em todos os produtos de chocolate.'),
+(1, '2024-10-01', '2024-10-15', 'Semana Romântica', 'Descontos em produtos românticos.'),
 (2, '2024-10-05', '2024-10-12', 'Festival de Frutas', 'Promoção de frutas selecionadas com 20% de desconto.'),
-(3, '2024-10-10', '2024-10-20', 'Dia das Crianças', 'Brinquedos em promoção e ofertas especiais para crianças.'),
-(4, '2024-11-01', '2024-11-30', 'Black November', 'Ofertas imperdíveis em eletrônicos e eletrodomésticos.'),
+(3, '2024-10-10', '2024-10-20', 'Dia das Bebidas', 'Desconto em bebidas.'),
+(4, '2024-11-01', '2024-11-30', 'Black November', 'Produtos mais baratos em Novembro.'),
 (5, '2024-11-10', '2024-11-20', 'Semana da Beleza', 'Descontos em produtos de beleza e cuidados pessoais.'),
-(6, '2024-11-15', '2024-11-25', 'Promoção do Café', 'Descontos em cafés e acessórios para preparo.'),
+(6, '2024-11-15', '2024-11-25', 'Promoção do Vinho', 'Vinhos mais baratos.'),
 (7, '2024-12-01', '2024-12-15', 'Natal Encantado', 'Presentes de Natal com até 30% de desconto.'),
 (8, '2024-12-10', '2024-12-24', 'Liquidação de Fim de Ano', 'Descontos em toda a loja para queima de estoque.'),
 (9, '2024-12-20', '2024-12-31', 'Réveillon Festivo', 'Ofertas especiais em bebidas e festas de fim de ano.'),
-(10, '2024-10-15', '2024-10-30', 'Promoção de Acessórios', 'Descontos em acessórios de moda e decoração.');
+(10, '2024-10-15', '2024-10-30', 'Latiday', 'Promoção especial de Laticínios.');
 
 
 pedido:
@@ -240,7 +240,15 @@ SET search_path TO hipermercado;
 INSERT INTO compra (nroCupom, dataCompra, horario, valorTotal, valorTotalDesconto, formaPagamento, valorDesconto, CPF)VALUES
 (1,'2021-12-10', '00:13:21', 53.50, 42.8, 'PIX', 10.70, '89012345678'),
 (2, current_date, '10:19:21', 94.50 , 75.6, 'Dinheiro', 18.9, '89012345678')
-(3, current_date, current_time, 2000, 1100, 'Moeda de Ouro', 900, '67890123456')
+(3, current_date, current_time, 2000, 1100, 'Moeda de Ouro', 900, '67890123456'),
+(4, '2024-10-23', '10:30:00', 450.00, 405.00, 'Cartão de Crédito', 45.00, '12345678901'), 
+(5, '2024-10-23', '11:00:00', 600.00, 480.00, 'Dinheiro', 120.00, '23456789012'),          
+(6, '2024-10-23', '12:15:00', 80.00, 72.00, 'Cartão de Débito', 8.00, '34567890123'),      
+(7, '2024-10-23', '13:20:00', 200.00, 110.00, 'Pix', 90.00, '45678901234'),                
+(8, '2024-10-23', '14:45:00', 150.00, 135.00, 'Cartão de Crédito', 15.00, '56789012345'),   
+(9, '2024-10-23', '15:30:00', 50.00, 27.50, 'Dinheiro', 22.50, '78901234567'),              
+(10, '2024-10-23', '16:00:00', 200.00, 110.00, 'Cartão de Crédito', 90.00, '01234567890');  
+
 
 
 estacontido:
@@ -253,4 +261,92 @@ INSERT INTO estacontido (quantidade, nroCupom, nroCadastro) VALUES
 (3, 2, 20005),
 (2, 1, 50002),
 (1, 1, 40005),
-(50, 3, 50003);
+(50, 3, 50003),
+(100, 4, 20002),
+(100, 5, 30004),
+(4, 6, 50004),
+(10, 7, 40001),
+(10, 8, 40003),
+(10, 9, 10005),
+(5, 10, 50003);
+
+contem:
+SET search_path TO hipermercado;
+
+INSERT INTO contem VALUES
+(100, 1, 10001),
+(150, 2, 30003),
+(100, 2, 30004),
+(1000, 3, 50002),
+(500, 3, 50003),
+(1000, 4, 20001),
+(500, 4, 20002),
+(300, 5, 20004),
+(200, 6, 20005),
+(100, 7, 20003),
+(700, 8, 30005),
+(2000, 9, 40001),
+(800, 10, 50001);
+
+
+fornece:
+SET search_path TO hipermercado;
+
+-- Inserção de produtos e seus respectivos fornecedores na tabela 'Fornece'
+
+INSERT INTO Fornece (precoCusto, nroCad, nroCadastro)
+VALUES
+(2.50, 1, 10001.00), -- Maçã (Fábrica de Chocolates Delícia)
+(1.50, 1, 10002.00), -- Banana (Fábrica de Chocolates Delícia)
+(1.00, 1, 10003.00), -- Alface (Fábrica de Chocolates Delícia)
+(3.00, 2, 10004.00), -- Cenoura (Livraria Mágica)
+(4.00, 2, 10005.00), -- Tomate (Livraria Mágica)
+(0.80, 3, 20001.00), -- Água Mineral (Pães e Doces do Paraíso)
+(3.00, 3, 20002.00), -- Suco de Laranja (Pães e Doces do Paraíso)
+(2.50, 4, 20003.00), -- Refrigerante (Aventuras em Pedais)
+(3.50, 4, 20004.00), -- Cerveja (Aventuras em Pedais)
+(25.00, 5, 20005.00), -- Vinho Tinto (Beleza Natural)
+(1.80, 5, 30001.00), -- Detergente (Beleza Natural)
+(6.00, 6, 30002.00), -- Sabão em Pó (Tecidos e Estampas)
+(4.50, 6, 30003.00), -- Desinfetante (Tecidos e Estampas)
+(5.00, 7, 30004.00), -- Álcool (Café da Manhã Gourmet)
+(0.80, 7, 30005.00), -- Esponja de Limpeza (Café da Manhã Gourmet)
+(18.00, 8, 40001.00), -- Queijo Mussarela (Brinquedos e Sorrisos)
+(2.50, 8, 40002.00), -- Iogurte Natural (Brinquedos e Sorrisos)
+(13.50, 9, 40003.00), -- Manteiga (Bijuterias da Amizade)
+(3.50, 9, 40004.00), -- Creme de Leite (Bijuterias da Amizade)
+(2.80, 10, 40005.00), -- Leite Integral (Hortas Urbanas)
+(12.50, 10, 50001.00), -- Filé de Frango (Hortas Urbanas)
+(20.00, 10, 50002.00), -- Carne Moída (Hortas Urbanas)
+(30.00, 9, 50003.00), -- Costela (Bijuterias da Amizade)
+(15.00, 8, 50004.00), -- Linguiça (Brinquedos e Sorrisos)
+(28.00, 7, 50005.00); -- Pernil (Café da Manhã Gourmet)
+
+
+esta em:
+
+INSERT INTO esta_em (descontoNormal, descontoEspecial, nroCadastro, codigo)
+VALUES 
+(10.00, 20.00, 40001.00, 1),
+(8.00, 15.00, 10001.00, 1),
+(5.00, 12.00, 20005.00, 1),
+(5.00, 10.00, 10001.00, 2),
+(3.00, 8.00, 10002.00, 2),
+(4.00, 9.00, 10004.00, 2),
+(15.00, 25.00, 20003.00, 3),
+(10.00, 20.00, 20004.00, 3),
+(50.00, 70.00, 30003.00, 4),
+(40.00, 60.00, 30004.00, 4),
+(20.00, 30.00, 30005.00, 5),
+(15.00, 25.00, 20005.00, 6),
+(20.00, 30.00, 50001.00, 7),
+(15.00, 25.00, 50003.00, 7),
+(30.00, 50.00, 20004.00, 8),
+(25.00, 45.00, 30002.00, 8),
+(35.00, 55.00, 20003.00, 9),
+(30.00, 50.00, 20004.00, 9),
+(15.00, 25.00, 40003.00, 10),
+(12.00, 22.00, 40004.00, 10);
+
+
+
