@@ -26,6 +26,7 @@ CREATE TABLE Funcionario
   FOREIGN KEY (enderecoHipermercado) REFERENCES hipermercado(endereco)
 );
 
+
 CREATE TABLE Fornecedor
 (
   nroCad NUMERIC(12) NOT NULL,
@@ -119,7 +120,7 @@ CREATE TABLE Compra
   CPFatendente VARCHAR(11) NOT NULL,
   PRIMARY KEY (nroCupom),
   FOREIGN KEY (CPF) REFERENCES Cliente(CPF),
-  FOREIGN KEY (CPFatendente) REFERENCES Funcionário(CPF)
+  FOREIGN KEY (CPFatendente) REFERENCES Funcionario(CPF)
 );
 
 CREATE TABLE Sessao
@@ -129,6 +130,15 @@ CREATE TABLE Sessao
   CPFRepositor VARCHAR(11) NOT NULL,
   PRIMARY KEY (codigo),
   FOREIGN KEY (CPFRepositor) REFERENCES Funcionario(CPF)
+);
+
+CREATE TABLE CategoriaProduto
+(
+  codigo VARCHAR(12) NOT NULL,
+  descricao VARCHAR(75) NOT NULL,
+  codigoSuperior VARCHAR(12),
+  PRIMARY KEY (codigo),
+  FOREIGN KEY (codigoSuperior) REFERENCES CategoriaProduto(codigo)
 );
 
 CREATE TABLE Produto
@@ -144,18 +154,10 @@ CREATE TABLE Produto
   codigo NUMERIC(12) NOT NULL,
   codigoCat VARCHAR(12) NOT NULL,
   PRIMARY KEY (nroCadastro),
-  FOREIGN KEY (codigo) REFERENCES Sessao(codigo)
+  FOREIGN KEY (codigo) REFERENCES Sessao(codigo),
   FOREIGN KEY (codigoCat) REFERENCES CategoriaProduto(codigo)
 );
 
-CREATE TABLE CategoriaProduto
-(
-  codigo VARCHAR(12) NOT NULL,
-  descricao VARCHAR(75) NOT NULL,
-  codigoSuperior VARCHAR(12),
-  PRIMARY KEY (codigo),
-  FOREIGN KEY (codigoSuperior) REFERENCES CategoriaProduto(codigo)
-);
 
 CREATE TABLE Fornece
 (
