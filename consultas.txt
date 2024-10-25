@@ -26,16 +26,6 @@ HAVING SUM(preco * qtdadeestoque) >= ALL (SELECT SUM(preco * qtdadeestoque)
 							FROM produto P JOIN sessao S ON S.codigo = P.codigo
 							GROUP BY S.nome)
 
-4)SET search_path TO hipermercado;
-
-SELECT F.nome, SUM(valorTotalDesconto)
-FROM Funcionario F, Compra CM
-WHERE F.cpf = CM.cpfatendente
-GROUP BY F.nome
-ORDER BY SUM(valorTotalDesconto) DESC
-
-
-
 4)
 SET search_path TO hipermercado;
 

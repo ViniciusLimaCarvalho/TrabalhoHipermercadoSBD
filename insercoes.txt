@@ -71,7 +71,7 @@ tipocliente:
 SET search_path TO hipermercado;
 
 INSERT INTO tipocliente VALUES
-(1,0.10,3000), (2,0.20,4000), (3,0.45,10000)
+(1,0.10,3000,'PRATA'), (2,0.20,4000,'OURO'), (3,0.45,10000,'DIAMANTE')
 
 
 cliente:
@@ -137,22 +137,23 @@ INSERT INTO categoriaproduto VALUES
 ('ACOU', 'Açougue', NULL),
 ('PEIX', 'PEIXARIA', 'ACOU'),
 ('LIMP', 'Limpeza',NULL),
-('FRIO', 'Frios e Laticínios', NULL);
+('FRIO', 'Frios e Laticínios', NULL),
+('BEBI','Bebidas',NULL);
 
 Funcionário:
 gerentes:
 
 INSERT INTO Funcionario (CPF, jornadaTrabalho, valorSalario, valorHoraExtra, funcao, dataIngressoGerencia, cursoGerencia, localAtendente, CPFGerente, enderecoHipermercado, enderecoResidencial, telefoneContato, dataNascimento, formacaoEscolar, estadoCivil, nome) VALUES
-('11122233344', 40, 6000.00, 50.00, 'Gerente', '2023-01-15', true, NULL, NULL, 'Rua A, 100', 'Rua das Acácias, 123', 11987654321, '1985-04-20', 'Ensino Superior', 'Solteira', 'Ana Santos'),
-('22233344455', 40, 6500.00, 60.00, 'Gerente', '2023-02-10', true, NULL, NULL, 'Avenida B, 200', 'Avenida das Flores, 456', 21987654321, '1980-06-15', 'Ensino Superior', 'Casado', 'Carlos Almeida'),
-('33344455566', 40, 7000.00, 55.00, 'Gerente', '2023-03-05', true, NULL, NULL, 'Praça C, 300', 'Praça do Mercado, 789', 31987654321, '1992-03-10', 'Ensino Superior', 'Solteira', 'Mariana Ferreira'),
-('44455566677', 40, 6200.00, 52.00, 'Gerente', '2023-04-01', true, NULL, NULL, 'Travessa D, 400', 'Avenida do Progresso, 400', 41987654321, '1978-11-05', 'Ensino Superior', 'Divorciado', 'João Pedro'),
-('55566677788', 40, 5800.00, 58.00, 'Gerente', '2023-04-20', true, NULL, NULL, 'Rua E, 500', 'Rua do Futuro, 500', 51987654321, '1990-12-01', 'Ensino Superior', 'Solteira', 'Fernanda Lima'),
-('66677788899', 40, 6900.00, 62.00, 'Gerente', '2023-05-10', true, NULL, NULL, 'Avenida F, 600', 'Praça da Alegria, 600', 61987654321, '1985-09-12', 'Ensino Superior', 'Casado', 'Pedro Silva'),
-('77788899900', 40, 7200.00, 65.00, 'Gerente', '2023-06-15', true, NULL, NULL, 'Praça G, 700', 'Travessa da Liberdade, 700', 71987654321, '1983-07-18', 'Ensino Superior', 'Solteira', 'Sofia Almeida'),
-('88899900011', 40, 6400.00, 59.00, 'Gerente', '2023-07-05', true, NULL, NULL, 'Rua H, 800', 'Avenida da Inovação, 800', 81987654321, '1989-05-24', 'Ensino Superior', 'Casado', 'Rafael Gomes'),
-('99900011122', 40, 7500.00, 70.00, 'Gerente', '2023-08-01', true, NULL, NULL, 'Avenida I, 900', 'Rua da Criatividade, 900', 91987654321, '1991-06-14', 'Ensino Superior', 'Solteira', 'Juliana Rocha'),
-('00011122233', 40, 6800.00, 53.00, 'Gerente', '2023-09-10', true, NULL, NULL, 'Rua J, 1000', 'Bairro do Desenvolvimento, 1000', 11912345678, '1982-08-30', 'Ensino Superior', 'Casado', 'José Gustavo');
+('11122233344', 40, 6000.00, 50.00, 'Gerente', '2023-01-15', true, NULL, NULL, 'Rua A, 100', 'Rua das Acácias, 123', 11987654321, '1985-04-20', 'Administração', 'Solteira', 'Ana Santos'),
+('22233344455', 40, 6500.00, 60.00, 'Gerente', '2023-02-10', true, NULL, NULL, 'Avenida B, 200', 'Avenida das Flores, 456', 21987654321, '1980-06-15', 'Engenharia', 'Casado', 'Carlos Almeida'),
+('33344455566', 40, 7000.00, 55.00, 'Gerente', '2023-03-05', true, NULL, NULL, 'Praça C, 300', 'Praça do Mercado, 789', 31987654321, '1992-03-10', 'Educação', 'Solteira', 'Mariana Ferreira'),
+('44455566677', 40, 6200.00, 52.00, 'Gerente', '2023-04-01', true, NULL, NULL, 'Travessa D, 400', 'Avenida do Progresso, 400', 41987654321, '1978-11-05', 'Medicina', 'Divorciado', 'João Pedro'),
+('55566677788', 40, 5800.00, 58.00, 'Gerente', '2023-04-20', true, NULL, NULL, 'Rua E, 500', 'Rua do Futuro, 500', 51987654321, '1990-12-01', 'Design', 'Solteira', 'Fernanda Lima'),
+('66677788899', 40, 6900.00, 62.00, 'Gerente', '2023-05-10', true, NULL, NULL, 'Avenida F, 600', 'Praça da Alegria, 600', 61987654321, '1985-09-12', 'Gestão', 'Casado', 'Pedro Silva'),
+('77788899900', 40, 7200.00, 65.00, 'Gerente', '2023-06-15', true, NULL, NULL, 'Praça G, 700', 'Travessa da Liberdade, 700', 71987654321, '1983-07-18', 'Direito', 'Solteira', 'Sofia Almeida'),
+('88899900011', 40, 6400.00, 59.00, 'Gerente', '2023-07-05', true, NULL, NULL, 'Rua H, 800', 'Avenida da Inovação, 800', 81987654321, '1989-05-24', 'Tecnologia', 'Casado', 'Rafael Gomes'),
+('99900011122', 40, 7500.00, 70.00, 'Gerente', '2023-08-01', true, NULL, NULL, 'Avenida I, 900', 'Rua da Criatividade, 900', 91987654321, '1991-06-14', 'Veterinária', 'Solteira', 'Juliana Rocha'),
+('00011122233', 40, 6800.00, 53.00, 'Gerente', '2023-09-10', true, NULL, NULL, 'Rua J, 1000', 'Bairro do Desenvolvimento, 1000', 11912345678, '1982-08-30', 'Administração', 'Casado', 'José Gustavo');
 
 demais funcionários:
 
@@ -239,15 +240,15 @@ SET search_path TO hipermercado;
 
 INSERT INTO compra (nroCupom, dataCompra, horario, valorTotal, valorTotalDesconto, formaPagamento, valorDesconto, CPF, CPFatendente)VALUES
 (1,'2021-12-10', '00:13:21', 53.50, 42.8, 'PIX', 10.70, '89012345678','77788899901'),
-(2, current_date, '10:19:21', 94.50 , 75.6, 'Dinheiro', 18.9, '89012345678','77788899901')
+(2, current_date, '10:19:21', 94.50 , 75.6, 'Dinheiro', 18.9, '89012345678','77788899901'),
 (3, current_date, current_time, 2000, 1100, 'Moeda de Ouro', 900, '67890123456','77788899901'),
 (4, '2024-10-23', '10:30:00', 450.00, 405.00, 'Cartão de Crédito', 45.00, '12345678901','77788899901'), 
-(5, '2024-10-23', '11:00:00', 600.00, 480.00, 'Dinheiro', 120.00, '23456789012','88899900012'),          
-(6, '2024-10-23', '12:15:00', 80.00, 72.00, 'Cartão de Débito', 8.00, '34567890123', '88899900012'),      
-(7, '2024-10-23', '13:20:00', 200.00, 110.00, 'Pix', 90.00, '45678901234', '88899900012'),                
-(8, '2024-10-23', '14:45:00', 150.00, 135.00, 'Cartão de Crédito', 15.00, '56789012345', '77788899902'),   
-(9, '2024-10-23', '15:30:00', 50.00, 27.50, 'Dinheiro', 22.50, '78901234567', '77788899902'),              
-(10, '2024-10-23', '16:00:00', 200.00, 110.00, 'Cartão de Crédito', 90.00, '01234567890', '88899900013');  
+(5, '2024-10-23', '11:00:00', 600.00, 480.00, 'Dinheiro', 120.00, '23456789012','88899900012'),
+(6, '2024-10-23', '12:15:00', 80.00, 72.00, 'Cartão de Débito', 8.00, '34567890123', '88899900012'),
+(7, '2024-10-23', '13:20:00', 200.00, 110.00, 'Pix', 90.00, '45678901234', '88899900012'),
+(8, '2024-10-23', '14:45:00', 150.00, 135.00, 'Cartão de Crédito', 15.00, '56789012345', '77788899902'),
+(9, '2024-10-23', '15:30:00', 50.00, 27.50, 'Dinheiro', 22.50, '78901234567', '77788899902'),
+(10, '2024-10-23', '16:00:00', 200.00, 110.00, 'Cartão de Crédito', 90.00, '01234567890', '88899900013'); 
 
 
 

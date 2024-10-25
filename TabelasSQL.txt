@@ -4,7 +4,7 @@ SET search_path TO hipermercado;
 CREATE TABLE Hipermercado
 (
   endereco VARCHAR(100) NOT NULL,
-  CPFGerente VARCHAR(11) NOT NULL,
+  CPFGerente VARCHAR(11),
   PRIMARY KEY (endereco)
 );
 
@@ -21,6 +21,12 @@ CREATE TABLE Funcionario
   localAtendente VARCHAR(40) ,
   CPFGerente VARCHAR(11),
   enderecoHipermercado VARCHAR(100),
+  enderecoResidencial VARCHAR(100),
+  telefoneContato NUMERIC(14),
+  dataNascimento DATE,
+  formacaoEscolar VARCHAR(30),
+  estadoCivil VARCHAR(30),
+  nome VARCHAR (50),
   PRIMARY KEY (CPF),
   FOREIGN KEY (CPFGerente) REFERENCES Funcionario(CPF),
   FOREIGN KEY (enderecoHipermercado) REFERENCES hipermercado(endereco)
@@ -75,6 +81,7 @@ CREATE TABLE tipoCliente
   tipo INT NOT NULL,
   desconto INT NOT NULL,
   valorminimo INT NOT NULL,
+  descricao VARCHAR(20),
   PRIMARY KEY (tipo)
 );
 
