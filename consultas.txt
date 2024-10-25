@@ -26,6 +26,15 @@ HAVING SUM(preco * qtdadeestoque) >= ALL (SELECT SUM(preco * qtdadeestoque)
 							FROM produto P JOIN sessao S ON S.codigo = P.codigo
 							GROUP BY S.nome)
 
+4)SET search_path TO hipermercado;
+
+SELECT F.nome, SUM(valorTotalDesconto)
+FROM Funcionario F, Compra CM
+WHERE F.cpf = CM.cpfatendente
+GROUP BY F.nome
+ORDER BY SUM(valorTotalDesconto) DESC
+
+
 
 4)
 SET search_path TO hipermercado;
@@ -46,3 +55,108 @@ LEFT JOIN Cliente C ON CM.cpf = C.cpf
 LEFT JOIN Funcionario FU ON CM.cpfatendente = FU.cpf
 LEFT JOIN Fornece FR ON P.nrocadastro = FR.nrocadastro
 LEFT JOIN Fornecedor F ON FR.nrocad = F.nrocad
+
+5)
+SET search_path TO hipermercado;
+
+SELECT SUM(valorTotalDesconto), F.nome
+FROM Compra CM, Funcionario F
+WHERE CM.cpfatendente = F.cpf
+GROUP BY F.nome
+ORDER BY SUM(valorTotalDesconto) DESC
+
+6)
+SET search_path TO hipermercado;
+
+SELECT F.nome, P.descricao AS produto, S.nome AS sessao
+FROM funcionario F, produto P, sessao S
+WHERE S.cpfrepositor = F.cpf AND S.codigo = P.codigo
+
+7)
+SET search_path TO hipermercado;
+
+SELECT SUM(valorTotalDesconto) AS valorCompras, C.nome, C.cpf, COUNT (nrocupom) AS nrocompras
+FROM Compra CM, Cliente C
+WHERE CM.cpf = C.cpf AND datacompra >= (current_date - INTERVAL '6 months') 
+GROUP BY C.nome, C.cpf
+HAVING SUM(valorTotalDesconto) > 120
+
+8)
+SET search_path TO hipermercado;
+
+SELECT P.nrocadastro, P.descricao, P.unidademedida, F.denominacaosocial
+FROM (Produto P JOIN Fornece FR ON P.nrocadastro = FR.nrocadastro) JOIN Fornecedor F ON FR.nrocad = F.nrocad
+WHERE P.qtdadeestoque = 0
+
+
+9)
+SET search_path TO hipermercado;
+
+SELECT P.media_vendas, 
+       P.descricao AS produto, 
+       P.qtdadeestoque, 
+       F.nome AS repositor, 
+       COALESCE(vendas_produto.total_vendas, 0) AS quantidade_vendida
+FROM produto P
+JOIN sessao S ON P.codigo = S.codigo
+JOIN funcionario F ON F.cpf = S.cpfrepositor
+LEFT JOIN (
+    SELECT P.nrocadastro, SUM(E.quantidade) AS total_vendas
+    FROM produto P
+    JOIN estacontido E ON P.nrocadastro = E.nrocadastro
+    JOIN compra CM ON CM.nrocupom = E.nrocupom
+	WHERE datacompra >= (current_date - INTERVAL '2 years')
+    GROUP BY P.nrocadastro
+) AS vendas_produto ON P.nrocadastro = vendas_produto.nrocadastro
+WHERE COALESCE(vendas_produto.total_vendas, 0) > P.media_vendas
+GROUP BY P.descricao, P.qtdadeestoque, P.media_vendas, F.nome, vendas_produto.total_vendas;
+
+10)
+SET search_path TO hipermercado;
+
+SELECT F.denominacaoSocial AS fornecedor, 
+       COUNT(E.nrocadastro) AS numero_vendas, 
+       SUM(CM.valorTotal) AS valor_total_vendas
+FROM Fornecedor F
+JOIN Fornece FR ON F.nroCad = FR.nroCad
+JOIN Produto P ON P.nroCadastro = FR.nroCadastro
+JOIN esta_em E ON P.nroCadastro = E.nroCadastro
+JOIN estacontido EC ON E.nroCadastro = EC.nroCadastro
+JOIN Compra CM ON CM.nroCupom = EC.nroCupom
+JOIN Promocao PR ON E.codigo = PR.codigo
+GROUP BY F.denominacaoSocial
+ORDER BY numero_vendas DESC, valor_total_vendas DESC;
+
+
+
+Updates:
+
+1)
+WITH produtosAcougue AS
+(
+SELECT P.nrocadastro
+FROM Produto P, categoriaproduto CR
+WHERE CR.codigo = P.codigoCat AND CR.codigosuperior = 'HORT'
+)
+UPDATE produto 
+SET qtdadeestoque = 0
+FROM produtosAcougue PA
+WHERE PA.nrocadastro = produto.nrocadastro
+
+2)
+WITH maiorFabricante AS (
+    SELECT P.fabricante, FR.nrocad
+    FROM Produto P 
+    JOIN Fornece FR ON FR.nrocadastro = P.nrocadastro
+    WHERE P.qtdadeestoque >= ALL (
+        SELECT P1.qtdadeestoque
+        FROM Produto P1
+        JOIN Fornece FR1 ON FR1.nrocadastro = P1.nrocadastro
+        WHERE FR1.nrocad = FR.nrocad
+    )
+    GROUP BY P.fabricante, FR.nrocad
+)
+UPDATE fornecedor F
+SET denominacaosocial = MF.fabricante
+FROM maiorFabricante MF
+WHERE F.nroCad = MF.nrocad;
